@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nossa História ❤</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --rose: #C8486A;
+    --rose-light: #F0C0CE;
+    --rose-pale: #FDF0F3;
+    --rose-dark: #8B2740;
+    --cream: #FBF7F4;
+    --ink: #2A1A1F;
+    --ink-muted: #7A5A62;
+    --ink-faint: #C4A8B0;
+    --gold: #C9943A;
+    --white: #FFFFFF;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ───────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,72,106,0.13) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(200,72,106,0.08) 0%, transparent 60%),
+      var(--cream);
+  }
+
+  .hero-ornament {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--rose-light));
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 640px; }
+
+  .hero-date {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(42px, 8vw, 72px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    color: var(--ink-muted);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--rose);
+    display: block;
+  }
+
+  .hero-stat-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--rose-light), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.6); }
+  }
+
+  /* ── SECTION LAYOUT ──────────────────────── */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    border-bottom: 1px solid rgba(200,72,106,0.1);
+  }
+
+  .section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-heading {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+    line-height: 1.2;
+  }
+
+  .section-heading em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  /* ── BIG METRICS GRID ────────────────────── */
+  .big-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: rgba(200,72,106,0.12);
+    border: 1px solid rgba(200,72,106,0.12);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 4rem;
+  }
+
+  .big-metric {
+    background: var(--white);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .big-metric:hover { background: var(--rose-pale); }
+
+  .big-metric-icon {
+    font-size: 28px;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .big-metric-value {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--rose);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .big-metric-label {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.4;
+  }
+
+  /* ── TIMELINE ────────────────────────────── */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--rose-light), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .tl-item.visible { opacity: 1; transform: translateX(0); }
+
+  .tl-dot {
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--rose);
+    border: 3px solid var(--cream);
+    box-shadow: 0 0 0 1px var(--rose-light);
+  }
+
+  .tl-year {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .tl-event {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .tl-detail {
+    font-size: 14px;
+    color: var(--ink-muted);
+    font-weight: 300;
+  }
+
+  .tl-badge {
+    display: inline-block;
+    background: var(--rose-pale);
+    color: var(--rose-dark);
+    border: 1px solid var(--rose-light);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 12px;
+    margin-top: 6px;
+  }
+
+  /* ── AMOR SECTION ────────────────────────── */
+  .love-big {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3rem;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid rgba(200,72,106,0.15);
+    border-radius: 20px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: 600px) {
+    .love-big { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
+  }
+
+  .love-number {
+    font-family: var(--serif);
+    font-size: 96px;
+    font-weight: 500;
+    color: var(--rose);
+    line-height: 1;
+  }
+
+  .love-subtitle {
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  .love-bars { display: flex; flex-direction: column; gap: 16px; }
+
+  .love-bar-item {}
+
+  .love-bar-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .love-bar-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .love-bar-val {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--rose);
+  }
+
+  .love-track {
+    height: 8px;
+    background: var(--rose-pale);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .love-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--rose);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1s cubic-bezier(.16,1,.3,1);
+  }
+
+  .love-fill.animated { transform: scaleX(1); }
+
+  .love-fill.blue { background: #3A7BD5; }
+
+  /* ── CHART SECTION ───────────────────────── */
+  .chart-container {
+    background: var(--white);
+    border: 1px solid rgba(200,72,106,0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .chart-label {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+  }
+
+  /* ── WEEKDAY ─────────────────────────────── */
+  .weekday-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .wd-col { text-align: center; }
+
+  .wd-name {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .wd-bar-wrap {
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .wd-bar {
+    width: 28px;
+    border-radius: 4px 4px 0 0;
+    background: var(--rose-light);
+    transform-origin: bottom;
+    transform: scaleY(0);
+    transition: transform 0.7s cubic-bezier(.16,1,.3,1);
+  }
+
+  .wd-bar.peak { background: var(--rose); }
+  .wd-bar.animated { transform: scaleY(1); }
+
+  .wd-val {
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+
+  /* ── HOUR BARS ───────────────────────────── */
+  .hour-rows { display: flex; flex-direction: column; gap: 5px; }
+
+  .h-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .h-row.visible { opacity: 1; transform: translateX(0); }
+
+  .h-label {
+    font-size: 11px;
+    color: var(--ink-muted);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .h-track {
+    flex: 1;
+    height: 12px;
+    background: var(--rose-pale);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .h-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: var(--rose-light);
+  }
+
+  .h-fill.peak { background: var(--rose); }
+  .h-fill.high { background: #D4739A; }
+
+  .h-count {
+    font-size: 11px;
+    color: var(--ink-muted);
+    width: 38px;
+    flex-shrink: 0;
+  }
+
+  /* ── TOP DAYS ────────────────────────────── */
+  .top-days-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .top-day {
+    background: var(--white);
+    border: 1px solid rgba(200,72,106,0.12);
+    border-radius: 14px;
+    padding: 1.25rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .top-day:hover { border-color: var(--rose); transform: translateY(-2px); }
+
+  .top-day-rank {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .top-day-date {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .top-day-count {
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  /* ── WORD CLOUD ──────────────────────────── */
+  .word-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .word-pill {
+    background: var(--white);
+    border: 1px solid rgba(200,72,106,0.15);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .word-pill:hover { background: var(--rose-pale); border-color: var(--rose-light); }
+
+  .word-pill .count {
+    font-weight: 500;
+    color: var(--rose);
+    font-family: var(--serif);
+    font-size: 15px;
+  }
+
+  /* ── FOOTER ──────────────────────────────── */
+  .footer {
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,72,106,0.2) 0%, transparent 70%);
+  }
+
+  .footer-content { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
+
+  .footer-line {
+    width: 40px; height: 1px;
+    background: var(--rose);
+    margin: 0 auto 2.5rem;
+  }
+
+  .footer-msg {
+    font-family: var(--serif);
+    font-size: clamp(18px, 3vw, 26px);
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-sig {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-light);
+  }
+
+  .footer-hearts {
+    margin-top: 2rem;
+    font-size: 20px;
+    opacity: 0.6;
+  }
+
+  /* ── ANIMATIONS ──────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── DIVIDER ─────────────────────────────── */
+  .ornament-divider {
+    text-align: center;
+    color: var(--rose-light);
+    font-size: 20px;
+    letter-spacing: 0.5em;
+    margin: 0.5rem 0;
+  }
+
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 640px) {
+    .hero-stats { gap: 1.5rem; }
+    .hero-stat-num { font-size: 28px; }
+    .love-number { font-size: 72px; }
+    .weekday-row { gap: 4px; }
+    .wd-bar { width: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <p class="hero-date">Desde Dezembro de 2012</p>
+    <h1 class="hero-title">Nossa <em>História</em></h1>
+    <p class="hero-subtitle">Uma vida inteira contada em mensagens, risos, saudades e amor.</p>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">13</span>
+        <span class="hero-stat-label">Anos juntos</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">82.717</span>
+        <span class="hero-stat-label">Mensagens</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">818</span>
+        <span class="hero-stat-label">"Te amo"</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>rolar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MÉTRICAS GERAIS -->
+<section class="section fade-in">
+  <p class="section-label">Os números da nossa história</p>
+  <h2 class="section-heading">Tudo que <em>construímos</em> juntos</h2>
+  <div class="big-metrics">
+    <div class="big-metric">
+      <span class="big-metric-icon">💬</span>
+      <span class="big-metric-value">82.717</span>
+      <span class="big-metric-label">mensagens trocadas</span>
+    </div>
+    <div class="big-metric">
+      <span class="big-metric-icon">❤️</span>
+      <span class="big-metric-value">818</span>
+      <span class="big-metric-label">vezes que dissemos "te amo"</span>
+    </div>
+    <div class="big-metric">
+      <span class="big-metric-icon">📆</span>
+      <span class="big-metric-value">3.032</span>
+      <span class="big-metric-label">dias com mensagens</span>
+    </div>
+    <div class="big-metric">
+      <span class="big-metric-icon">✍️</span>
+      <span class="big-metric-value">1,5 mi</span>
+      <span class="big-metric-label">caracteres escritos pra você</span>
+    </div>
+    <div class="big-metric">
+      <span class="big-metric-icon">📊</span>
+      <span class="big-metric-value">24,3</span>
+      <span class="big-metric-label">mensagens por dia (média)</span>
+    </div>
+    <div class="big-metric">
+      <span class="big-metric-icon">🏆</span>
+      <span class="big-metric-value">320</span>
+      <span class="big-metric-label">mensagens no dia mais intenso</span>
+    </div>
+  </div>
+</section>
+
+<!-- LINHA DO TEMPO -->
+<section class="section">
+  <p class="section-label">Nossa jornada</p>
+  <h2 class="section-heading fade-in">Os momentos que <em>nos definiram</em></h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-year">Dezembro de 2012</p>
+      <p class="tl-event">Começamos a namorar</p>
+      <p class="tl-detail">O início de tudo — e o começo de uma história que nunca parou.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-year">Janeiro de 2017</p>
+      <p class="tl-event">Primeiras mensagens registradas no WhatsApp</p>
+      <p class="tl-detail">Quando as conversas viraram história. 6.323 mensagens só nesse primeiro ano de registro.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-year">2018 — 2019</p>
+      <p class="tl-event">Os anos mais intensos do WhatsApp</p>
+      <p class="tl-detail">2019 foi o auge: 16.266 mensagens em um único ano. Nunca houve tanto a dizer.</p>
+      <span class="tl-badge">📊 Recorde histórico</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-year">Dezembro de 2020</p>
+      <p class="tl-event">Passamos a morar juntos</p>
+      <p class="tl-detail">A distância virou cumplicidade, as mensagens viraram recadinhos em casa.</p>
+      <span class="tl-badge">🏠 Novo capítulo</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-year">Junho de 2023</p>
+      <p class="tl-event">Nasceu nosso filho</p>
+      <p class="tl-detail">A maior mensagem do universo — sem precisar de texto. Nossa família completa.</p>
+      <span class="tl-badge">👶 A maior alegria</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background: var(--gold); box-shadow: 0 0 0 1px #F5D89A;"></div>
+      <p class="tl-year" style="color: var(--gold);">Maio de 2026 — Hoje</p>
+      <p class="tl-event">Seguimos juntos</p>
+      <p class="tl-detail">E ainda tenho muito a te dizer. Cada mensagem, um dia que valeu a pena.</p>
+    </div>
+  </div>
+</section>
+
+<!-- "TE AMO" -->
+<section class="section fade-in">
+  <p class="section-label">As palavras mais importantes</p>
+  <h2 class="section-heading">"<em>Te amo</em>" — cada vez que foi dito</h2>
+  <div class="love-big">
+    <div>
+      <div class="love-number">818</div>
+      <div class="love-subtitle">declarações de amor</div>
+    </div>
+    <div class="love-bars">
+      <div class="love-bar-item">
+        <div class="love-bar-meta">
+          <span class="love-bar-name">Adrielli</span>
+          <span class="love-bar-val">575</span>
+        </div>
+        <div class="love-track">
+          <div class="love-fill" style="width: 70%;" id="bar1"></div>
+        </div>
+      </div>
+      <div class="love-bar-item">
+        <div class="love-bar-meta">
+          <span class="love-bar-name">Matheus</span>
+          <span class="love-bar-val">243</span>
+        </div>
+        <div class="love-track">
+          <div class="love-fill blue" style="width: 100%;" id="bar2"></div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-muted); margin-top: 12px; font-style: italic;">
+        Ela diz "te amo" mais — mas você registra cada um no coração. 💙
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DIA DA SEMANA -->
+<section class="section fade-in">
+  <p class="section-label">Ritmo das conversas</p>
+  <h2 class="section-heading">Quando mais <em>pensamos um no outro</em></h2>
+  <p style="font-size: 14px; color: var(--ink-muted); margin-bottom: 1.5rem; font-weight: 300;">
+    Quinta-feira é, historicamente, o dia favorito de vocês para conversar.
+  </p>
+  <div class="weekday-row" id="weekdayRow"></div>
+</section>
+
+<!-- HORÁRIOS -->
+<section class="section fade-in">
+  <p class="section-label">Horário preferido</p>
+  <h2 class="section-heading">O melhor momento do dia — <em>sempre às 19h</em></h2>
+  <p style="font-size: 14px; color: var(--ink-muted); margin-bottom: 1.5rem; font-weight: 300;">
+    O final da tarde, hora de voltar pra casa, é quando as mensagens mais fluem.
+  </p>
+  <div class="chart-container">
+    <div class="hour-rows" id="hourRows"></div>
+  </div>
+</section>
+
+<!-- MENSAGENS AO LONGO DO TEMPO -->
+<section class="section fade-in">
+  <p class="section-label">Ao longo dos anos</p>
+  <h2 class="section-heading">Uma história que <em>não para de crescer</em></h2>
+  <div class="chart-container">
+    <div class="chart-label">Mensagens por mês — 2017 a 2026</div>
+    <div style="position: relative; height: 220px;">
+      <canvas id="monthlyChart" role="img" aria-label="Gráfico de mensagens mensais de 2017 a 2026">Quantidade de mensagens trocadas por mês ao longo dos anos.</canvas>
+    </div>
+  </div>
+</section>
+
+<!-- DIAS MAIS INTENSOS -->
+<section class="section fade-in">
+  <p class="section-label">Os dias mais marcantes</p>
+  <h2 class="section-heading">Quando <em>não parávamos</em> de conversar</h2>
+  <div class="top-days-list">
+    <div class="top-day">
+      <p class="top-day-rank">1º lugar</p>
+      <p class="top-day-date">31 ago 2019</p>
+      <p class="top-day-count">320 mensagens em um único dia</p>
+    </div>
+    <div class="top-day">
+      <p class="top-day-rank">2º lugar</p>
+      <p class="top-day-date">1 ago 2019</p>
+      <p class="top-day-count">269 mensagens em um único dia</p>
+    </div>
+    <div class="top-day">
+      <p class="top-day-rank">3º lugar</p>
+      <p class="top-day-date">1 set 2019</p>
+      <p class="top-day-count">245 mensagens em um único dia</p>
+    </div>
+    <div class="top-day">
+      <p class="top-day-rank">4º lugar</p>
+      <p class="top-day-date">2 jul 2019</p>
+      <p class="top-day-count">229 mensagens em um único dia</p>
+    </div>
+    <div class="top-day">
+      <p class="top-day-rank">5º lugar</p>
+      <p class="top-day-date">20 ago 2019</p>
+      <p class="top-day-count">226 mensagens em um único dia</p>
+    </div>
+    <div class="top-day">
+      <p class="top-day-rank">6º lugar</p>
+      <p class="top-day-date">1 set 2018</p>
+      <p class="top-day-count">225 mensagens em um único dia</p>
+    </div>
+  </div>
+</section>
+
+<!-- PALAVRAS MAIS USADAS -->
+<section class="section fade-in">
+  <p class="section-label">As palavras que nos definem</p>
+  <h2 class="section-heading">O vocabulário do <em>nosso amor</em></h2>
+  <p style="font-size: 14px; color: var(--ink-muted); margin-bottom: 1.5rem; font-weight: 300;">
+    As palavras mais presentes em todas as nossas conversas ao longo dos anos.
+  </p>
+  <div class="word-pills">
+    <div class="word-pill">amor <span class="count">2.419</span></div>
+    <div class="word-pill">mor <span class="count">2.371</span></div>
+    <div class="word-pill">você <span class="count">1.907</span></div>
+    <div class="word-pill">aqui <span class="count">1.669</span></div>
+    <div class="word-pill">casa <span class="count">1.591</span></div>
+    <div class="word-pill">bom <span class="count">1.283</span></div>
+    <div class="word-pill">agora <span class="count">1.119</span></div>
+    <div class="word-pill">dia <span class="count">1.116</span></div>
+    <div class="word-pill">amo <span class="count">982</span></div>
+    <div class="word-pill">mãe <span class="count">890</span></div>
+    <div class="word-pill">indo <span class="count">873</span></div>
+    <div class="word-pill">vamos <span class="count">770</span></div>
+    <div class="word-pill">quero <span class="count">646</span></div>
+    <div class="word-pill">feliz <span class="count">140</span></div>
+    <div class="word-pill">saudade <span class="count">94</span></div>
+    <div class="word-pill">beijo <span class="count">97</span></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-bg"></div>
+  <div class="footer-content">
+    <div class="footer-line"></div>
+    <p class="footer-msg">
+      "82.717 mensagens. Mas nenhuma delas conta tudo que você significa pra mim.
+      Obrigado por cada bom dia, cada boa noite, cada 'já estou indo'.
+      Você é a melhor parte de cada dia."
+    </p>
+    <p class="footer-sig">Com todo o meu amor — Matheus ❤</p>
+    <div class="footer-hearts">❤ ❤ ❤</div>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Trigger bar animations
+        e.target.querySelectorAll('.love-fill').forEach(b => b.classList.add('animated'));
+        e.target.querySelectorAll('.wd-bar').forEach(b => b.classList.add('animated'));
+        e.target.querySelectorAll('.h-row').forEach((r, i) => {
+          setTimeout(() => r.classList.add('visible'), i * 30);
+        });
+        e.target.querySelectorAll('.tl-item').forEach((item, i) => {
+          setTimeout(() => item.classList.add('visible'), i * 120);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in, .timeline, section').forEach(el => observer.observe(el));
+
+  // Weekday bars
+  const weekdays = [
+    { name: 'Seg', val: 11276 },
+    { name: 'Ter', val: 12623 },
+    { name: 'Qua', val: 13436 },
+    { name: 'Qui', val: 13516 },
+    { name: 'Sex', val: 12798 },
+    { name: 'Sáb', val: 11564 },
+    { name: 'Dom', val: 7504 },
+  ];
+  const maxWD = Math.max(...weekdays.map(d => d.val));
+  const wdRow = document.getElementById('weekdayRow');
+  weekdays.forEach(d => {
+    const pct = Math.round((d.val / maxWD) * 70);
+    const isPeak = d.val === maxWD;
+    wdRow.innerHTML += `<div class="wd-col">
+      <div class="wd-name" style="${isPeak ? 'color:var(--rose);font-weight:500;' : ''}">${d.name}</div>
+      <div class="wd-bar-wrap"><div class="wd-bar ${isPeak ? 'peak' : ''}" style="height:${pct}px;"></div></div>
+      <div class="wd-val">${(d.val / 1000).toFixed(1)}k</div>
+    </div>`;
+  });
+
+  // Hour bars
+  const hours = [
+    {h:'00h',v:2596},{h:'01h',v:1004},{h:'02h',v:315},
+    {h:'06h',v:195},{h:'07h',v:599},{h:'08h',v:2441},
+    {h:'09h',v:3511},{h:'10h',v:4830},{h:'11h',v:5795},
+    {h:'12h',v:5776},{h:'13h',v:4070},{h:'14h',v:4245},
+    {h:'15h',v:4977},{h:'16h',v:5011},{h:'17h',v:6130},
+    {h:'18h',v:6542},{h:'19h',v:7440},{h:'20h',v:5613},
+    {h:'21h',v:4108},{h:'22h',v:3727},{h:'23h',v:3743},
+  ];
+  const maxH = Math.max(...hours.map(h => h.v));
+  const hRows = document.getElementById('hourRows');
+  hours.forEach(h => {
+    const pct = Math.round((h.v / maxH) * 100);
+    const isPeak = h.v === maxH;
+    const isHigh = h.v > 5500;
+    hRows.innerHTML += `<div class="h-row">
+      <span class="h-label">${h.h}</span>
+      <div class="h-track"><div class="h-fill ${isPeak ? 'peak' : isHigh ? 'high' : ''}" style="width:${pct}%;"></div></div>
+      <span class="h-count">${isPeak ? '⭐ ' : ''}${(h.v/1000).toFixed(1)}k</span>
+    </div>`;
+  });
+
+  // Monthly chart
+  const monthlyData = [
+    101,189,371,397,515,697,750,773,601,525,820,584,
+    921,540,927,689,934,1675,1225,1596,1781,1416,1217,1603,
+    1428,898,1282,942,1489,1060,1857,2211,1411,1250,1481,957,
+    1016,905,1296,1119,1142,837,948,644,1724,1757,1804,1964,
+    1109,861,482,368,411,621,655,579,1002,697,704,789,
+    679,590,919,414,513,828,538,660,479,643,464,460,
+    370,308,372,480,551,282,235,167,158,229,316,308,
+    314,260,320,531,269,134,445,502,146,297,398,578,
+    321,417,188,367,327,419,316,402,325,391,403,719,
+    490,656,539,504,229,
+  ];
+
+  const labels = [];
+  const yearList = [2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+  yearList.forEach(y => {
+    const mCount = y === 2026 ? 5 : 12;
+    for (let m = 0; m < mCount; m++) {
+      labels.push(m === 0 ? String(y) : '');
+    }
+  });
+
+  new Chart(document.getElementById('monthlyChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Mensagens',
+        data: monthlyData,
+        borderColor: '#C8486A',
+        backgroundColor: 'rgba(200,72,106,0.07)',
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: true,
+        tension: 0.35,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: (items) => labels[items[0].dataIndex] || '',
+            label: (item) => `${item.raw} mensagens`,
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: {
+            color: '#7A5A62',
+            font: { size: 11, family: 'DM Sans' },
+            maxRotation: 0,
+            autoSkip: false,
+          }
+        },
+        y: {
+          grid: { color: 'rgba(200,72,106,0.07)', lineWidth: 1 },
+          ticks: { color: '#7A5A62', font: { size: 11, family: 'DM Sans' } }
+        }
+      }
+    }
+  });
+
+  // Animate love bars when visible
+  const loveSection = document.querySelector('.love-big');
+  const loveObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.love-fill').forEach(b => b.classList.add('animated'));
+      }
+    });
+  }, { threshold: 0.3 });
+  if (loveSection) loveObserver.observe(loveSection);
+
+  // Animate all h-rows on section visible
+  const hourSection = document.getElementById('hourRows');
+  const hrObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.h-row').forEach((r, i) => {
+          setTimeout(() => r.classList.add('visible'), i * 25);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  if (hourSection) hrObserver.observe(hourSection);
+
+  // Animate weekday bars
+  const wdSection = document.getElementById('weekdayRow');
+  const wdObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.wd-bar').forEach((b, i) => {
+          setTimeout(() => b.classList.add('animated'), i * 80);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  if (wdSection) wdObserver.observe(wdSection);
+
+  // Timeline items
+  document.querySelectorAll('.tl-item').forEach((item, i) => {
+    const tlObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          setTimeout(() => item.classList.add('visible'), i * 120);
+        }
+      });
+    }, { threshold: 0.2 });
+    tlObserver.observe(item);
+  });
+</script>
+</body>
+</html>
